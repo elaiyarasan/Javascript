@@ -1,0 +1,65 @@
+<html>
+<head>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/series-label.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+</head>
+<body>
+<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<script>
+  var data = $internal.data;
+  var balance = [];
+  
+  for(var i=1;i<data.length;i++){
+    var year = parseInt(data[i][0].split('/')[2]);
+    var month = parseInt(data[i][0].split('/')[0]-1);
+    var day = parseInt(data[i][0].split('/')[1]);
+    var money = parseFloat(data[i][1]);
+    balance.push(
+      [Date.UTC(year, month, day),money]
+    );
+  }
+  
+  Highcharts.chart('container', {
+    chart: {
+        type: 'line'
+    },
+    title: {
+        text: 'My balance'
+    },
+    subtitle: {
+        text: ''
+    },
+    xAxis: {
+        type: 'datetime',
+        
+        title: {
+            text: 'Date'
+        }
+    },
+    yAxis: [
+      {
+        title: {
+            text: 'Balance ($)'
+        },
+        min: 0
+      }
+    ],
+    legend:{
+        	enabled: false
+    },
+    plotOptions: {
+    },
+
+    series: [{
+      	name: "Balance",
+        data: balance,
+      	step: true,
+        showInLegend: false
+    }]
+});
+  
+  
+</script>
+</body>
+</html>
